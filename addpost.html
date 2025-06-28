@@ -19,6 +19,14 @@
   </select><br><br>
 
   <button onclick="addPost()">Post</button>
+  <h4>Filter by Category:</h4>
+<select id="filterCategory" onchange="filterPosts()">
+  <option value="All">All</option>
+  <option value="Tech">Tech</option>
+  <option value="Food">Food</option>
+  <option value="Travel">Travel</option>
+  <option value="Education">Education</option>
+</select>
 
   <h3>All Posts:</h3>
   <div id="postList"></div>
@@ -42,20 +50,25 @@
       }
     }
 
-    function displayPosts() {
-      let posts = JSON.parse(localStorage.getItem("posts")) || [];
-      let postList = document.getElementById("postList");
-      postList.innerHTML = "";
+  function displayPosts(filteredCategory = "All") {
+  let posts = JSON.parse(localStorage.getItem("posts")) || [];
+  let postList = document.getElementById("postList");
+  postList.innerHTML = "";
 
-      posts.forEach((post, index) => {
-        postList.innerHTML += `<div style="border:1px solid #ccc; margin:10px; padding:10px;">
-          <h4>${post.title}</h4>
-          <p>${post.content}</p>
-          <p><strong>Category:</strong> ${post.category}</p>
-        </div>`;
-      });
+  posts.forEach((post) => {
+    if (filteredCategory === "All" || post.category === filteredCategory) {
+      postList.innerHTML += `<div style="border:1px solid #ccc; margin:10px; padding:10px;">
+        <h4>${post.title}</h4>
+        <p>${post.content}</p>
+        <p><strong>Category:</strong> ${post.category}</p>
+      </div>`;
     }
-
+  });
+  }
+function filterPosts() {
+  const selectedCategory = document.getElementById("filterCategory").value;
+  displayPosts(selectedCategory);
+}
     // Load posts when page opens
     window.onload = displayPosts;
   </script>
