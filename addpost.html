@@ -9,6 +9,15 @@
 
   <input type="text" id="title" placeholder="Enter post title"><br><br>
   <textarea id="content" placeholder="Enter post content"></textarea><br><br>
+
+  <label for="category">Choose Category:</label>
+  <select id="category">
+    <option value="Tech">Tech</option>
+    <option value="Food">Food</option>
+    <option value="Travel">Travel</option>
+    <option value="Education">Education</option>
+  </select><br><br>
+
   <button onclick="addPost()">Post</button>
 
   <h3>All Posts:</h3>
@@ -18,9 +27,10 @@
     function addPost() {
       const title = document.getElementById("title").value;
       const content = document.getElementById("content").value;
+      const category = document.getElementById("category").value;
 
-      if (title && content) {
-        const post = { title, content };
+      if (title && content && category) {
+        const post = { title, content, category };
         let posts = JSON.parse(localStorage.getItem("posts")) || [];
         posts.push(post);
         localStorage.setItem("posts", JSON.stringify(posts));
@@ -28,7 +38,7 @@
         document.getElementById("title").value = "";
         document.getElementById("content").value = "";
       } else {
-        alert("Please enter title and content");
+        alert("Please fill in all fields");
       }
     }
 
@@ -38,14 +48,15 @@
       postList.innerHTML = "";
 
       posts.forEach((post, index) => {
-        postList.innerHTML += `<div>
+        postList.innerHTML += `<div style="border:1px solid #ccc; margin:10px; padding:10px;">
           <h4>${post.title}</h4>
-          <p>${post.content}</p><hr>
+          <p>${post.content}</p>
+          <p><strong>Category:</strong> ${post.category}</p>
         </div>`;
       });
     }
 
-    // Show existing posts when page loads
+    // Load posts when page opens
     window.onload = displayPosts;
   </script>
 </body>
