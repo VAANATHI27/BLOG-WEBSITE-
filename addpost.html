@@ -2,30 +2,51 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Create New Post</title>
-  <link rel="stylesheet" href="style.css">
+  <title>Add Blog Post</title>
 </head>
 <body>
-  <h1>Create a New Blog Post</h1>
+  <h2>Add New Blog Post</h2>
 
-  <form action="#" method="post">
-    <label for="title">Post Title:</label><br>
-    <input type="text" id="title" name="title" required><br><br>
+  <input type="text" id="title" placeholder="Enter post title"><br><br>
+  <textarea id="content" placeholder="Enter post content"></textarea><br><br>
+  <button onclick="addPost()">Post</button>
 
-    <label for="category">Category:</label><br>
-    <select id="category" name="category">
-      <option value="Tech">Tech</option>
-      <option value="Travel">Travel</option>
-      <option value="Food">Food</option>
-    </select><br><br>
+  <h3>All Posts:</h3>
+  <div id="postList"></div>
 
-    <label for="content">Content:</label><br>
-    <textarea id="content" name="content" rows="10" cols="50" required></textarea><br><br>
+  <script>
+    function addPost() {
+      const title = document.getElementById("title").value;
+      const content = document.getElementById("content").value;
 
-    <input type="submit" value="Post">
-  </form>
+      if (title && content) {
+        const post = { title, content };
+        let posts = JSON.parse(localStorage.getItem("posts")) || [];
+        posts.push(post);
+        localStorage.setItem("posts", JSON.stringify(posts));
+        displayPosts();
+        document.getElementById("title").value = "";
+        document.getElementById("content").value = "";
+      } else {
+        alert("Please enter title and content");
+      }
+    }
 
-  <br>
-  <a href="dashboard.html">← Back to Dashboard</a>
+    function displayPosts() {
+      let posts = JSON.parse(localStorage.getItem("posts")) || [];
+      let postList = document.getElementById("postList");
+      postList.innerHTML = "";
+
+      posts.forEach((post, index) => {
+        postList.innerHTML += `<div>
+          <h4>${post.title}</h4>
+          <p>${post.content}</p><hr>
+        </div>`;
+      });
+    }
+
+    // Show existing posts when page loads
+    window.onload = displayPosts;
+  </script>
 </body>
 </html>
