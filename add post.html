@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Create New Post</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Create a New Blog Post</h1>
+
+  <form action="#" method="post">
+    <label for="title">Post Title:</label><br>
+    <input type="text" id="title" name="title" required><br><br>
+
+    <label for="category">Category:</label><br>
+    <select id="category" name="category">
+      <option value="Tech">Tech</option>
+      <option value="Travel">Travel</option>
+      <option value="Food">Food</option>
+    </select><br><br>
+
+    <label for="content">Content:</label><br>
+    <textarea id="content" name="content" rows="10" cols="50" required></textarea><br><br>
+
+    <input type="submit" value="Post">
+  </form>
+
+  <br>
+  <a href="dashboard.html">← Back to Dashboard</a>
+</body>
+</html>
